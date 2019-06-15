@@ -23,6 +23,7 @@ namespace EfCommands
 
             return new GetManufacturerDto
             {
+                Id = manufacturer.Id,
                 Name = manufacturer.Name
             };
         }

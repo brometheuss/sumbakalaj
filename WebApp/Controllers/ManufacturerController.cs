@@ -11,52 +11,50 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApp.Controllers
 {
-    public class ModelController : Controller
+    public class ManufacturerController : Controller
     {
-        private readonly IGetModelsCommand _getModels;
-        private readonly IGetModelCommand _getModel;
-        private readonly IAddModelCommand _addModel;
-        private readonly IEditModelCommand _editModel;
-        private readonly IDeleteModelCommand _deleteModel;
+        private readonly IGetManufacturersCommand _getManufacturers;
+        private readonly IGetManufacturerCommand _getManufacturer;
+        private readonly IAddManufacturerCommand _addManufacturer;
+        private readonly IEditManufacturerCommand _editManufacturer;
+        private readonly IDeleteManufacturerCommand _deleteManufacturer;
 
-        public ModelController(IGetModelsCommand getModels, IGetModelCommand getModel, IAddModelCommand addModel, IEditModelCommand editModel, IDeleteModelCommand deleteModel)
+        public ManufacturerController(IGetManufacturersCommand getManufacturers, IGetManufacturerCommand getManufacturer, IAddManufacturerCommand addManufacturer, IEditManufacturerCommand editManufacturer, IDeleteManufacturerCommand deleteManufacturer)
         {
-            _getModels = getModels;
-            _getModel = getModel;
-            _addModel = addModel;
-            _editModel = editModel;
-            _deleteModel = deleteModel;
+            _getManufacturers = getManufacturers;
+            _getManufacturer = getManufacturer;
+            _addManufacturer = addManufacturer;
+            _editManufacturer = editManufacturer;
+            _deleteManufacturer = deleteManufacturer;
         }
 
-
-
-        // GET: Model
-        public ActionResult Index(ModelQuery query)
+        // GET: Manufacturer
+        public ActionResult Index(ManufacturerQuery request)
         {
-            return View(_getModels.Execute(query));
+            return View(_getManufacturers.Execute(request));
         }
 
-        // GET: Model/Details/5
+        // GET: Manufacturer/Details/5
         public ActionResult Details(int id)
         {
-            return View(_getModel.Execute(id));
+            return View(_getManufacturer.Execute(id));
         }
 
-        // GET: Model/Create
+        // GET: Manufacturer/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Model/Create
+        // POST: Manufacturer/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(AddModelDto dto)
+        public ActionResult Create(AddManufacturerDto dto)
         {
             try
             {
                 // TODO: Add insert logic here
-                _addModel.Execute(dto);
+                _addManufacturer.Execute(dto);
                 return RedirectToAction(nameof(Index));
             }
             catch (EntityAlreadyExistsException e)
@@ -66,21 +64,21 @@ namespace WebApp.Controllers
             return View();
         }
 
-        // GET: Model/Edit/5
+        // GET: Manufacturer/Edit/5
         public ActionResult Edit(int id)
         {
-            return View(_getModel.Execute(id));
+            return View(_getManufacturer.Execute(id));
         }
 
-        // POST: Model/Edit/5
+        // POST: Manufacturer/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, AddModelDto dto)
+        public ActionResult Edit(int id, AddManufacturerDto dto)
         {
             try
             {
                 // TODO: Add update logic here
-                _editModel.Execute(dto);
+                _editManufacturer.Execute(dto);
                 return RedirectToAction(nameof(Index));
             }
             catch (EntityNotFoundException)
@@ -93,12 +91,12 @@ namespace WebApp.Controllers
             }
         }
 
-        // GET: Model/Delete/5
+        // GET: Manufacturer/Delete/5
         public ActionResult Delete(int id)
         {
             try
             {
-                return View(_getModel.Execute(id));
+                return View(_getManufacturer.Execute(id));
             }
             catch (EntityNotFoundException)
             {
@@ -110,7 +108,7 @@ namespace WebApp.Controllers
             }
         }
 
-        // POST: Model/Delete/5
+        // POST: Manufacturer/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
@@ -118,7 +116,7 @@ namespace WebApp.Controllers
             try
             {
                 // TODO: Add delete logic here
-                _deleteModel.Execute(id);
+                _deleteManufacturer.Execute(id);
                 return RedirectToAction(nameof(Index));
             }
             catch

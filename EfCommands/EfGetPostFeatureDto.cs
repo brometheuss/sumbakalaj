@@ -22,7 +22,7 @@ namespace EfCommands
             var query = Context.Posts.AsQueryable();
 
 
-            return null;
+            return null;  
         }
     }
 }

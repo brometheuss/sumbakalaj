@@ -50,6 +50,16 @@ namespace Api
             services.AddTransient<IAddModelCommand, EfAddModelCommand>();
             services.AddTransient<IEditModelCommand, EfEditModelCommand>();
             services.AddTransient<IDeleteModelCommand, EfDeleteModelCommand>();
+            services.AddTransient<IGetPostCommand, EfGetPostCommand>();
+            services.AddTransient<IGetPostsCommand, EfGetPostsCommand>();
+            services.AddTransient<IAddPostCommand, EfAddPostCommand>();
+            services.AddTransient<IEditPostCommand, EfEditPostCommand>();
+            services.AddTransient<IDeletePostCommand, EfDeletePostCommand>();
+            services.AddTransient<IGetFeatureCommand, EfGetFeatureCommand>();
+            services.AddTransient<IGetFeaturesCommand, EfGetFeaturesCommand>();
+            services.AddTransient<IAddFeatureCommand, EfAddFeatureCommand>();
+            services.AddTransient<IEditFeatureCommand, EfEditFeatureCommand>();
+            services.AddTransient<IDeleteFeatureCommand, EfDeleteFeatureCommand>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

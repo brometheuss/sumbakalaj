@@ -36,6 +36,7 @@ namespace EfCommands
                 Total = totalCount,
                 Data = query.Select(r => new GetManufacturerDto
                 {
+                    Id = r.Id,
                     Name = r.Name
                 })
             };

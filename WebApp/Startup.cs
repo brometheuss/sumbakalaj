@@ -39,6 +39,11 @@ namespace WebApp
             services.AddTransient<IAddModelCommand, EfAddModelCommand>();
             services.AddTransient<IEditModelCommand, EfEditModelCommand>();
             services.AddTransient<IDeleteModelCommand, EfDeleteModelCommand>();
+            services.AddTransient<IGetManufacturersCommand, EfGetManufacturersCommand>();
+            services.AddTransient<IGetManufacturerCommand, EfGetManufacturerCommand>();
+            services.AddTransient<IAddManufacturerCommand, EfAddManufacturerCommand>();
+            services.AddTransient<IEditManufacturerCommand, EfEditManufacturerCommand>();
+            services.AddTransient<IDeleteManufacturerCommand, EfDeleteManufacturerCommand>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }

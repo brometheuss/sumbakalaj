@@ -6,6 +6,7 @@ namespace BusinessLogic.DTO
 {
     public class GetManufacturerDto
     {
+        public int Id { get; set; }
         public string Name { get; set; }
     }
 }
