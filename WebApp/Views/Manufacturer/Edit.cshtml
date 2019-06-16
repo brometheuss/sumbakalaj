@@ -7,6 +7,12 @@
 <h2>Edit</h2>
 
 <h4>GetManufacturerDto</h4>
+
+@if(TempData["error"] != null)
+{
+    <p class="text-danger">@TempData["error"]</p>
+}
+
 <hr />
 <div class="row">
     <div class="col-md-4">

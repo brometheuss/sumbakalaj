@@ -15,7 +15,7 @@ namespace EfCommands
         {
         }
 
-        public void Execute(AddModelDto request)
+        public void Execute(GetModelDto request)
         {
             var model = Context.Models.Find(request.Id);
 

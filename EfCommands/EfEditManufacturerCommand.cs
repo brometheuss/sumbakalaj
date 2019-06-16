@@ -15,7 +15,7 @@ namespace EfCommands
         {
         }
 
-        public void Execute(AddManufacturerDto request)
+        public void Execute(GetManufacturerDto request)
         {
             var manufacturer = Context.Manufacturers.Find(request.Id);
 

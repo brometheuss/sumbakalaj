@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BusinessLogic.Commands;
+using BusinessLogic.Helpers;
+using BusinessLogic.Interfaces;
 using EfCommands;
 using EfDataAccess;
 using Microsoft.AspNetCore.Builder;
@@ -60,6 +62,12 @@ namespace Api
             services.AddTransient<IAddFeatureCommand, EfAddFeatureCommand>();
             services.AddTransient<IEditFeatureCommand, EfEditFeatureCommand>();
             services.AddTransient<IDeleteFeatureCommand, EfDeleteFeatureCommand>();
+
+
+            //email sender
+            /*var section = Configuration.GetSection("Email");
+            var sender = new EmailSender(Int32.Parse(section["port"]), section["from"], section["pass"], section["host"]);
+            services.AddSingleton<IEmailSender>(sender);*/
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

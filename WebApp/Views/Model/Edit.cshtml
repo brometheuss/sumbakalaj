@@ -7,6 +7,12 @@
 <h2>Edit</h2>
 
 <h4>GetModelDto</h4>
+
+@if(TempData["error"] != null)
+{
+    <p class="alert-danger">@TempData["error"]</p>
+}
+
 <hr />
 <div class="row">
     <div class="col-md-4">

@@ -76,7 +76,7 @@ namespace Api.Controllers
 
         // PUT: api/Manufacturer/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] AddManufacturerDto dto)
+        public IActionResult Put(int id, [FromBody] GetManufacturerDto dto)
         {
             try
             {

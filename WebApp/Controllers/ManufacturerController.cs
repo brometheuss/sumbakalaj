@@ -51,15 +51,24 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(AddManufacturerDto dto)
         {
+            if (!ModelState.IsValid)
+            {
+                TempData["error"] = "Ooops, something went wrong.";
+                RedirectToAction(nameof(Index));
+            }
             try
             {
                 // TODO: Add insert logic here
                 _addManufacturer.Execute(dto);
                 return RedirectToAction(nameof(Index));
             }
-            catch (EntityAlreadyExistsException e)
+            catch (EntityAlreadyExistsException)
             {
-                TempData["error"] = e.Message;
+                TempData["error"] = "Manufacturer with that name already exists.";
+            }
+            catch (Exception)
+            {
+                TempData["error"] = "An error has occurred.";
             }
             return View();
         }
@@ -73,8 +82,12 @@ namespace WebApp.Controllers
         // POST: Manufacturer/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, AddManufacturerDto dto)
+        public ActionResult Edit(int id, GetManufacturerDto dto)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(dto);
+            }
             try
             {
                 // TODO: Add update logic here
@@ -85,9 +98,14 @@ namespace WebApp.Controllers
             {
                 return RedirectToAction(nameof(Index));
             }
+            catch (EntityAlreadyExistsException)
+            {
+                TempData["error"] = "Manufacturer with that name already exists, try a different one.";
+                return View(dto);
+            }
             catch
             {
-                return View();
+                return RedirectToAction(nameof(Index));
             }
         }
 

@@ -80,7 +80,7 @@ namespace Api.Controllers
 
         // PUT: api/Model/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] AddModelDto dto)
+        public IActionResult Put(int id, [FromBody] GetModelDto dto)
         {
             try
             {

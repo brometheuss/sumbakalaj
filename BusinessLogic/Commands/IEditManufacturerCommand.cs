@@ -6,7 +6,7 @@ using System.Text;
 
 namespace BusinessLogic.Commands
 {
-    public interface IEditManufacturerCommand : ICommand<AddManufacturerDto>
+    public interface IEditManufacturerCommand : ICommand<GetManufacturerDto>
     {
     }
 }
