@@ -6,7 +6,7 @@ namespace BusinessLogic.Interfaces
 {
     public interface IEmailSender
     {
-        string To { get; set; }
+        string ToEmail { get; set; }
         string Subject { get; set; }
         string Body { get; set; }
         void Send();

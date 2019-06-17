@@ -11,18 +11,18 @@ namespace BusinessLogic.Helpers
     {
         private int port;
         private string from;
-        private string pass;
+        private string password;
         private string host;
 
-        public EmailSender(int port, string from, string pass, string host)
+        public EmailSender(int port, string from, string password, string host)
         {
             this.port = port;
             this.from = from;
-            this.pass = pass;
+            this.password = password;
             this.host = host;
         }
 
-        public string To { get; set; } 
+        public string ToEmail { get; set; } 
         public string Subject { get; set; } 
         public string Body { get; set; } 
 
@@ -35,10 +35,10 @@ namespace BusinessLogic.Helpers
                 EnableSsl = true,
                 DeliveryMethod = SmtpDeliveryMethod.Network,
                 UseDefaultCredentials = false,
-                Credentials = new NetworkCredential(from, pass)
+                Credentials = new NetworkCredential(from, password)
             };
 
-            using (var message = new MailMessage(from, To)
+            using (var message = new MailMessage(from, ToEmail)
             {
                 Subject = Subject,
                 Body = Body

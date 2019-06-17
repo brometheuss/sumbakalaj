@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using BusinessLogic.Commands;
 using BusinessLogic.Helpers;
@@ -15,6 +17,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace Api
 {
@@ -62,12 +65,22 @@ namespace Api
             services.AddTransient<IAddFeatureCommand, EfAddFeatureCommand>();
             services.AddTransient<IEditFeatureCommand, EfEditFeatureCommand>();
             services.AddTransient<IDeleteFeatureCommand, EfDeleteFeatureCommand>();
+            services.AddTransient<IGetPostFeaturesCommand, EfGetPostFeaturesCommand>();
 
 
             //email sender
-            /*var section = Configuration.GetSection("Email");
-            var sender = new EmailSender(Int32.Parse(section["port"]), section["from"], section["pass"], section["host"]);
-            services.AddSingleton<IEmailSender>(sender);*/
+            var section = Configuration.GetSection("Email");
+            var sender = new EmailSender(Int32.Parse(section["port"]), section["fromaddress"], section["password"], section["host"]);
+            services.AddSingleton<IEmailSender>(sender);
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "Sumbakalaj API", Version = "v1" });
+                // Set the comments path for the Swagger JSON and UI.
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -84,6 +97,15 @@ namespace Api
 
             app.UseHttpsRedirection();
             app.UseMvc();
+
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), 
+            // specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            });
         }
     }
 }

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BusinessLogic.Commands;
+using BusinessLogic.Queries;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,11 +13,19 @@ namespace Api.Controllers
     [ApiController]
     public class PostFeatureController : ControllerBase
     {
+        private readonly IGetPostFeaturesCommand _getPostFeatures;
+
+        public PostFeatureController(IGetPostFeaturesCommand getPostFeatures)
+        {
+            _getPostFeatures = getPostFeatures;
+        }
+
+
         // GET: api/PostFeature
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult Get([FromBody]FeatureQuery query)
         {
-            return new string[] { "value1", "value2" };
+            return Ok(_getPostFeatures.Execute(query));
         }
 
         // GET: api/PostFeature/5

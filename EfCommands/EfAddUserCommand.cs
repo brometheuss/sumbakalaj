@@ -1,6 +1,7 @@
 ﻿using BusinessLogic.Commands;
 using BusinessLogic.DTO;
 using BusinessLogic.Exceptions;
+using BusinessLogic.Interfaces;
 using EfDataAccess;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ namespace EfCommands
 {
     public class EfAddUserCommand : EfBaseCommand, IAddUserCommand
     {
+        private readonly IEmailSender _emailSender;
         public EfAddUserCommand(EfContext context) : base(context)
         {
         }
@@ -31,6 +33,11 @@ namespace EfCommands
             });
 
             Context.SaveChanges();
+
+            _emailSender.Body = "User created";
+            _emailSender.Subject = "You successfully added a new user.";
+            _emailSender.ToEmail = "netcoreict@gmail.com";
+            _emailSender.Send();
         }
     }
 }
