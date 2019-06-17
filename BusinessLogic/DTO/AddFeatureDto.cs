@@ -8,7 +8,7 @@ namespace BusinessLogic.DTO
     public class AddFeatureDto
     {
         public int Id { get; set; }
-        [Required]
+        [Required(ErrorMessage = "This field is required")]
         public string Name { get; set; }
     }
 }

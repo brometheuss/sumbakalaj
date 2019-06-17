@@ -11,6 +11,7 @@ namespace BusinessLogic.DTO
         [Required(ErrorMessage = "This field is required.")]
         [StringLength(30, MinimumLength = 1, ErrorMessage = "Name has to be between 2 and 30 characters long.")]
         public string Name { get; set; }
+        [Required]
         public int ManufacturerId { get; set; }
     }
 }

@@ -8,11 +8,11 @@ namespace BusinessLogic.DTO
     public class AddPostDto
     {
         public int Id { get; set; }
-        [Required]
+        [Required(ErrorMessage = "This field is required")]
         public int UserId { get; set; }
-        [Required]
+        [Required(ErrorMessage = "This field is required")]
         public int ModelId { get; set; }
-        [Required]
+        [Required(ErrorMessage = "This field is required")]
         public int FuelId { get; set; }
     }
 }
