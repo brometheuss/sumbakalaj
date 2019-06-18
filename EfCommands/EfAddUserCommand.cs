@@ -12,9 +12,10 @@ namespace EfCommands
 {
     public class EfAddUserCommand : EfBaseCommand, IAddUserCommand
     {
-        private readonly IEmailSender _emailSender;
-        public EfAddUserCommand(EfContext context) : base(context)
+        protected readonly IEmailSender _emailSender;
+        public EfAddUserCommand(EfContext context, IEmailSender emailSender) : base(context)
         {
+            _emailSender = emailSender;
         }
 
         public void Execute(AddUserDto request)

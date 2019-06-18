@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Api.Helpers;
 using BusinessLogic.Commands;
 using BusinessLogic.Helpers;
 using BusinessLogic.Interfaces;
@@ -66,6 +67,11 @@ namespace Api
             services.AddTransient<IEditFeatureCommand, EfEditFeatureCommand>();
             services.AddTransient<IDeleteFeatureCommand, EfDeleteFeatureCommand>();
             services.AddTransient<IGetPostFeaturesCommand, EfGetPostFeaturesCommand>();
+
+            //encryption
+            var key = Configuration.GetSection("Encryption")["key"];
+            var enc = new Encryption(key);
+            services.AddSingleton(enc);
 
 
             //email sender
