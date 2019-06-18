@@ -12,12 +12,14 @@ using EfCommands;
 using EfDataAccess;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace Api
@@ -67,11 +69,35 @@ namespace Api
             services.AddTransient<IEditFeatureCommand, EfEditFeatureCommand>();
             services.AddTransient<IDeleteFeatureCommand, EfDeleteFeatureCommand>();
             services.AddTransient<IGetPostFeaturesCommand, EfGetPostFeaturesCommand>();
+            services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
 
             //encryption
             var key = Configuration.GetSection("Encryption")["key"];
             var enc = new Encryption(key);
+
             services.AddSingleton(enc);
+
+            services.AddTransient<LoggedUser>(s =>
+            {
+                var http = s.GetRequiredService<IHttpContextAccessor>();
+                var value = http.HttpContext.Request.Headers["Authorization"].ToString();
+                var encryption = s.GetRequiredService<Encryption>();
+
+                try
+                {
+                    var decryptedString = encryption.DecryptString(value);
+                    decryptedString = decryptedString.Replace("\f", "");
+                    var user = JsonConvert.DeserializeObject<LoggedUser>(decryptedString);
+                    user.IsLogged = true;
+                    return user;
+                }
+                catch (Exception)
+                {
+                    return new LoggedUser {
+                        IsLogged = false
+                    };
+                }
+            });
 
 
             //email sender

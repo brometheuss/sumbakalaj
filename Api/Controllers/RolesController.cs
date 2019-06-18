@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Api.Helpers;
 using BusinessLogic.Commands;
 using BusinessLogic.DTO;
 using BusinessLogic.Exceptions;
@@ -21,18 +22,21 @@ namespace Api.Controllers
         private readonly IAddRoleCommand _addRoleCommand;
         private readonly IEditRoleCommand _editRoleCommand;
         private readonly IDeleteRoleCommand _deleteRoleCommand;
+        private readonly LoggedUser _loggedUser;
 
-        public RolesController(IGetRoleCommand getRoleCommand, IGetRolesCommand getRolesCommand, IAddRoleCommand addRoleCommand, IEditRoleCommand editRoleCommand, IDeleteRoleCommand deleteRoleCommand)
+        public RolesController(IGetRoleCommand getRoleCommand, IGetRolesCommand getRolesCommand, IAddRoleCommand addRoleCommand, IEditRoleCommand editRoleCommand, IDeleteRoleCommand deleteRoleCommand, LoggedUser loggedUser)
         {
             _getRoleCommand = getRoleCommand;
             _getRolesCommand = getRolesCommand;
             _addRoleCommand = addRoleCommand;
             _editRoleCommand = editRoleCommand;
             _deleteRoleCommand = deleteRoleCommand;
+            _loggedUser = loggedUser;
         }
 
 
         // GET: api/Roles
+        [LoggedIn("Administrator")]
         [HttpGet]
         public IActionResult Get([FromQuery]RoleQuery query)
         {
@@ -47,6 +51,7 @@ namespace Api.Controllers
         }
 
         // GET: api/Roles/5
+        [LoggedIn("Administrator")]
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
@@ -61,6 +66,7 @@ namespace Api.Controllers
         }
 
         // POST: api/Roles
+        [LoggedIn("Administrator")]
         [HttpPost]
         public IActionResult Post([FromBody] AddRoleDto dto)
         {
@@ -76,6 +82,7 @@ namespace Api.Controllers
         }
 
         // PUT: api/Roles/5
+        [LoggedIn("Administrator")]
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] AddRoleDto dto)
         {
@@ -92,6 +99,7 @@ namespace Api.Controllers
         }
 
         // DELETE: api/ApiWithActions/5
+        [LoggedIn("Administrator")]
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {

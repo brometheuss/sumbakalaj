@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Api.Helpers;
 using BusinessLogic.Commands;
 using BusinessLogic.DTO;
 using BusinessLogic.Exceptions;
@@ -20,14 +21,16 @@ namespace Api.Controllers
         private readonly IAddModelCommand _addModelCommand;
         private readonly IEditModelCommand _editModelCommand;
         private readonly IDeleteModelCommand _deleteModelCommand;
+        private readonly LoggedUser _loggedUser;
 
-        public ModelController(IGetModelCommand getModelCommand, IGetModelsCommand getModelsCommand, IAddModelCommand addModelCommand, IEditModelCommand editModelCommand, IDeleteModelCommand deleteModelCommand)
+        public ModelController(IGetModelCommand getModelCommand, IGetModelsCommand getModelsCommand, IAddModelCommand addModelCommand, IEditModelCommand editModelCommand, IDeleteModelCommand deleteModelCommand, LoggedUser loggedUser)
         {
             _getModelCommand = getModelCommand;
             _getModelsCommand = getModelsCommand;
             _addModelCommand = addModelCommand;
             _editModelCommand = editModelCommand;
             _deleteModelCommand = deleteModelCommand;
+            _loggedUser = loggedUser;
         }
 
 
@@ -60,6 +63,7 @@ namespace Api.Controllers
         }
 
         // POST: api/Model
+        [LoggedIn("Administrator")]
         [HttpPost]
         public IActionResult Post([FromBody] AddModelDto dto)
         {
@@ -79,6 +83,7 @@ namespace Api.Controllers
         }
 
         // PUT: api/Model/5
+        [LoggedIn("Administrator")]
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] GetModelDto dto)
         {
@@ -95,6 +100,7 @@ namespace Api.Controllers
         }
 
         // DELETE: api/ApiWithActions/5
+        [LoggedIn("Administrator")]
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
